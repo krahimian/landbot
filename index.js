@@ -21,9 +21,40 @@ let transporter = nodemailer.createTransport({
 const options = config[argv.name]
 let data = jsonfile.readFileSync(options.data_path) || {}
 
+if (data.error_count > 3) {
+  return
+}
+
 search(options.search_options, function(err, results) {
-  if (err)
-    return logger.error(err)
+  if (err) {
+    if (!data.error_count)
+      data.error_count = 0
+
+    data.error_count++;
+
+    let mailOptions = {
+      from: config.gmail.user,
+      to: config.gmail.error_to,
+      subject: `LandBot Error: ${argv.name}`,
+      html: `Having trouble conducting searches: ${err.toString()}`,
+      auth: {
+	user: config.gmail.user,
+	refreshToken: config.gmail.refreshToken,
+	accessToken: config.gmail.accessToken,
+	expires: config.gmail.expires
+      }
+    }
+
+    return transporter.sendMail(mailOptions, (error, info) => {
+      if (error)
+	return logger.error(error)
+
+      logger.info(`Message ${info.messageId} sent: ${info.response}`)
+      jsonfile.writeFileSync(options.data_path, data)
+    })
+  }
+
+  data.error_count = 0
 
   logger.info(`Found ${results.length} results`)
 

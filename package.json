@@ -1,0 +1,22 @@
+{
+  "name": "LandBot",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "jsonfile": "^3.0.1",
+    "logplease": "^1.2.14",
+    "nodemailer": "^4.1.0",
+    "yargs": "^8.0.2",
+    "zillow": "github:misatkia/zillow#e206626"
+  },
+  "devDependencies": {
+    "google-auth-library": "^0.10.0",
+    "googleapis": "^21.3.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT"
+}
