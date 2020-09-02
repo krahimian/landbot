@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "google-auth-library": "^0.10.0",
-    "googleapis": "^21.3.0"
+    "googleapis": "^59.0.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
